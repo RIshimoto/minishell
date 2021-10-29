@@ -17,7 +17,7 @@ void			term_mode(char *p, int arg_cols, int arg_rows)
 		ft_putendl_fd("Error: getenv", 2);
 		exit(1);
 	}
-	if (tgetent(buf, term) != 1)
+	if (tgetent(NULL, term) != 1)
 	{
 		ft_putendl_fd("Error: tgetent", 2);
 		exit(1);

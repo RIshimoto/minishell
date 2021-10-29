@@ -221,6 +221,7 @@ int		minishell_echo(char **argv);
 int		minishell_unset(char **argv, t_shell *shell);
 int		minishell_exit(char **argv, t_shell *shell);
 int		minishell_export(char **argv, t_shell *shell);
+void	bubble_sort(char **tab, int n);
 int		minishell_env(char **argv);
 
 // shell_var

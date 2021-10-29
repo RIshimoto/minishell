@@ -2,5 +2,5 @@
 
 void	end(void)
 {
-	system("leaks minishell_leaks");
+	system("/usr/bin/leaks minishell_leaks");
 }

@@ -45,6 +45,7 @@ SRCS = \
 	src/error/error.c \
 	src/free/free.c \
 	src/util/set_environ.c \
+	src/util/sort.c \
 	src/minishell.c
 OBJS=$(SRCS:.c=.o)
 
