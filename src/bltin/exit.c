@@ -1,9 +1,6 @@
 #include "../../includes/minishell.h"
 
-#define LIMIT			(LLONG_MAX / 10)
-#define POSITIVE_LAST_D	(LLONG_MAX % 10)
-
-void exit_err(char *s, char *msg)
+void	exit_err(char *s, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd("exit: ", 2);
@@ -13,18 +10,18 @@ void exit_err(char *s, char *msg)
 	exit(255);
 }
 
-static int ft_isdigits(char *num)
+static int	ft_isdigits(char *num)
 {
-	int i;
-	char *n;
-	int flag;
+	int		i;
+	char	*n;
+	int		flag;
 
 	i = 0;
 	flag = 0;
 	n = ft_strtrim(num, " ");
 	if (num[i] == '+' || num[i] == '-')
 		i++;
-	while(n[i] != '\0')
+	while (n[i] != '\0')
 	{
 		if (ft_isdigit(n[i]) == 1)
 			flag = 1;
@@ -36,10 +33,10 @@ static int ft_isdigits(char *num)
 	return (flag);
 }
 
-int minishell_exit(char **argv, t_shell *shell)
+int	minishell_exit(char **argv, t_shell *shell)
 {
-	long long n;
-	int i;
+	long long	n;
+	int			i;
 
 	ft_putendl_fd("exit", 2);
 	if (argv[1] != NULL)
