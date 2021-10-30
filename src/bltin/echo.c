@@ -1,9 +1,9 @@
 #include "../../includes/minishell.h"
 
-static char check_opt_n(char ***argv)
+static char	check_opt_n(char ***argv)
 {
-	bool opt_n;
-	int i;
+	bool	opt_n;
+	int		i;
 
 	opt_n = false;
 	while (**argv != NULL)
@@ -20,19 +20,19 @@ static char check_opt_n(char ***argv)
 	return (opt_n);
 }
 
-static void output(char **argv)
+static void	output(char **argv)
 {
 	if (*argv == NULL)
-		return;
+		return ;
 	ft_putstr_fd(*argv, 1);
 	if (*(argv + 1) != NULL)
 		ft_putstr_fd(" ", 1);
 	output(argv + 1);
 }
 
-int minishell_echo(char **argv)
+int	minishell_echo(char **argv)
 {
-	bool opt_n;
+	bool	opt_n;
 
 	argv++;
 	opt_n = check_opt_n(&argv);
