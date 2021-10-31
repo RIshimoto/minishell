@@ -1,11 +1,11 @@
 #include "../../includes/minishell.h"
 
-bool lookup_bltin(char **args)
+bool	lookup_bltin(char **args)
 {
-	const char *bltin_name[] = {
+	const char	*bltin_name[] = {
 		"cd", "echo", "pwd", "unset", "exit", "export", "env", NULL\
 	};
-	int i;
+	int			i;
 
 	i = 0;
 	while (bltin_name[i] != NULL)
@@ -17,9 +17,9 @@ bool lookup_bltin(char **args)
 	return (false);
 }
 
-void execute_bltin(char **args, t_shell *shell)
+void	execute_bltin(char **args, t_shell *shell)
 {
-	int n;
+	int	n;
 
 	n = shell->exit_status;
 	if (ft_strcmp(args[0], "cd") == EQUAL)

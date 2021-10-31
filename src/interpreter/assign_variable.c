@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-void assign_variable(t_queue *vars, t_shell *shell)
+void	assign_variable(t_queue *vars, t_shell *shell)
 {
-	char *var;
+	char	*var;
 
 	while (!q_empty(vars))
 	{
@@ -10,4 +10,3 @@ void assign_variable(t_queue *vars, t_shell *shell)
 		set_shell_var(shell, var);
 	}
 }
-

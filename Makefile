@@ -36,7 +36,6 @@ SRCS = \
 	src/prompt/history.c \
 	src/bltin/cd.c \
 	src/bltin/cd_path.c\
-	src/bltin/cd_path_join.c\
 	src/bltin/cd_chdir.c\
 	src/bltin/cd_cdpath.c\
 	src/bltin/echo.c \
@@ -49,6 +48,7 @@ SRCS = \
 	src/free/free.c \
 	src/util/set_environ.c \
 	src/util/sort.c \
+	src/util/path_join.c \
 	src/minishell.c
 OBJS=$(SRCS:.c=.o)
 
