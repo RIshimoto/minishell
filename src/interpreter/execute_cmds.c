@@ -1,13 +1,5 @@
 #include "../../includes/minishell.h"
 
-void error_message(char *s, char *path)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(s, 2);
-}
-
 void	handle_execve_error(char *cmd_path, t_shell *shell)
 {
 	struct stat	sb;
@@ -19,7 +11,7 @@ void	handle_execve_error(char *cmd_path, t_shell *shell)
 	stat(cmd_path, &sb);
 	if (S_ISDIR(sb.st_mode))
 	{
-		error_message("is a directory", cmd_path);
+		err_cstmmsg(cmd_path, NULL, "is a directory");
 		minishell_end(shell);
 	}
 	if (errno == ENOEXEC)
@@ -31,7 +23,7 @@ void	handle_execve_error(char *cmd_path, t_shell *shell)
 		}
 		errno = EACCES;
 	}
-	error_message(strerror(errno), cmd_path);
+	err_cstmmsg(cmd_path, NULL, strerror(errno));
 	minishell_end(shell);
 }
 
@@ -105,7 +97,7 @@ static char	*search_path(char *cmd_name, t_shell *shell)
 	env_value = get_param_value(get_shell_var(shell, "PATH"));
 	if (env_value == NULL || *env_value == '\0')
 	{
-		error_message(strerror(ENOENT), cmd_name);
+		err_cstmmsg(cmd_name, NULL, strerror(ENOENT));
 		shell->exit_status = 127;
 		minishell_end(shell);
 	}

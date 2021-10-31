@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void err_syntax(t_ip *ip, t_shell *shell)
+void	err_syntax(t_ip *ip, t_shell *shell)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd("syntax error near unexpected token ", 2);
@@ -13,7 +13,7 @@ void err_syntax(t_ip *ip, t_shell *shell)
 	shell->exit_status = 258;
 }
 
-void err_notfound(char *cmd, t_shell *shell)
+void	err_notfound(char *cmd, t_shell *shell)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
@@ -22,7 +22,7 @@ void err_notfound(char *cmd, t_shell *shell)
 	minishell_end(shell);
 }
 
-void err_errno(char *s, char *arg)
+void	err_errno(char *s, char *arg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(s, 2);
@@ -32,7 +32,7 @@ void err_errno(char *s, char *arg)
 	ft_putendl_fd(strerror(errno), 2);
 }
 
-void err_cstmmsg(char *s, char *c, char *msg)
+void	err_cstmmsg(char *s, char *c, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(s, 2);
