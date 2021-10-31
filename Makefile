@@ -17,6 +17,7 @@ SRCS = \
 	src/interpreter/pipeline.c \
 	src/interpreter/simple_command.c \
 	src/interpreter/execute_cmds.c \
+	src/interpreter/execute_path.c \
 	src/interpreter/execute_bltin.c \
 	src/interpreter/assign_variable.c \
 	src/interpreter/expansion.c \

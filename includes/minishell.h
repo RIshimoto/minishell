@@ -202,6 +202,8 @@ void	exec_simplecmd(t_list *datas, t_shell *shell);
 bool	lookup_bltin(char **args);
 void	execute_bltin(char **args, t_shell *shell);
 void	execute_cmds(char **args, t_shell *shell);
+void    update_cmd_path(char **cmd_path, char *tmp);
+char	*search_path(char *cmd_name, t_shell *shell);
 void	assign_variable(t_queue *vars, t_shell *shell);
 char	**expand_words(t_list *words, t_shell *shell, bool quote);
 char	**expand_word(char *word, t_shell *shell, bool quote);
