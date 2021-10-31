@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-void dp_free(char **str)
+void	dp_free(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != NULL)
@@ -13,27 +13,27 @@ void dp_free(char **str)
 	free(str);
 }
 
-void ip_free(void *content)
+void	ip_free(void *content)
 {
 	free(((t_ip *)content)->id_string);
 	free((t_ip *)content);
 }
 
-void data_free(void *content)
+void	data_free(void *content)
 {
-	t_queue queue;
+	t_queue	queue;
 
-	queue = ((t_data *)content)->vars; 
+	queue = ((t_data *)content)->vars;
 	while (!q_empty(&queue))
 		deq(&queue);
-	queue = ((t_data *)content)->fds; 
+	queue = ((t_data *)content)->fds;
 	while (!q_empty(&queue))
 		deq(&queue);
 	ft_lstclear(&((t_data *)content)->words, free);
 	free((t_data *)content);
 }
 
-void gmr_free(void *content)
+void	gmr_free(void *content)
 {
 	ft_lstclear(&((t_gmr *)content)->datas, data_free);
 	free(content);
