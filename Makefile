@@ -36,6 +36,9 @@ SRCS = \
 	src/prompt/history.c \
 	src/bltin/cd.c \
 	src/bltin/cd_path.c\
+	src/bltin/cd_path_join.c\
+	src/bltin/cd_chdir.c\
+	src/bltin/cd_cdpath.c\
 	src/bltin/echo.c \
 	src/bltin/pwd.c \
 	src/bltin/unset.c \

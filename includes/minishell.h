@@ -213,6 +213,9 @@ void	set_signal_dfl(void);
 
 // bltin
 int		minishell_cd(char **argv, t_shell *shell);
+int		change_dir(char *path, t_shell *shell);
+bool    is_use_cdpath(char **argv, char *path);
+int		use_cdpath_chg(char *path, t_shell *shell);
 char	*get_absolute_path(char *path, bool *is_absolute_path, t_shell *shell);
 char	*path_join(char *path, char *new_path);
 char	*three_path_join(char *s1, char *s2, char *s3);
