@@ -1,30 +1,30 @@
 #include "../../../includes/minishell.h"
 
-static void double_quote(t_dlist **line, t_ip *ip)
+static void	double_quote(t_dlist **line, t_ip *ip)
 {
 	while (next_ch(line, ip) != '\"')
 	{
 		if (ip->ch == '\0')
-			break;
+			break ;
 		else
 			ip_charjoin(ip, ip->ch);
 	}
 	ip_charjoin(ip, ip->ch);
 }
 
-static void single_quote(t_dlist **line, t_ip *ip)
+static void	single_quote(t_dlist **line, t_ip *ip)
 {
 	while (next_ch(line, ip) != '\'')
 	{
 		if (ip->ch == '\0')
-			break;
+			break ;
 		else
 			ip_charjoin(ip, ip->ch);
 	}
 	ip_charjoin(ip, ip->ch);
 }
 
-void quoting(t_dlist **line, t_ip *ip)
+void	quoting(t_dlist **line, t_ip *ip)
 {
 	ip_charjoin(ip, ip->ch);
 	if (ip->ch == '\"')
