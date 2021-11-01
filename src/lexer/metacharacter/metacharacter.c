@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-static void meta_or(t_dlist **line, t_ip *ip)
+static void	meta_or(t_dlist **line, t_ip *ip)
 {
 	next_ch(line, ip);
 	if (ip->ch == '|')
@@ -13,7 +13,7 @@ static void meta_or(t_dlist **line, t_ip *ip)
 		ip->sy = PIPE;
 }
 
-static void meta_and(t_dlist **line, t_ip *ip)
+static void	meta_and(t_dlist **line, t_ip *ip)
 {
 	next_ch(line, ip);
 	if (ip->ch == '&')
@@ -26,7 +26,7 @@ static void meta_and(t_dlist **line, t_ip *ip)
 		ip->sy = AND;
 }
 
-static void meta_redirect(t_dlist **line, t_ip *ip)
+static void	meta_redirect(t_dlist **line, t_ip *ip)
 {
 	ip->sy = REDIRECT;
 	if (ip->ch == '>')
@@ -51,7 +51,7 @@ static void meta_redirect(t_dlist **line, t_ip *ip)
 		next_ch(line, ip);
 }
 
-void metacharacter(t_dlist **line, t_ip *ip)
+void	metacharacter(t_dlist **line, t_ip *ip)
 {
 	ip_charjoin(ip, ip->ch);
 	if (ip->ch == '|')
@@ -61,4 +61,3 @@ void metacharacter(t_dlist **line, t_ip *ip)
 	else if (ip->ch == '>' || ip->ch == '<')
 		meta_redirect(line, ip);
 }
-

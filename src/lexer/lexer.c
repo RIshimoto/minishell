@@ -1,23 +1,23 @@
 #include "../../includes/minishell.h"
 
-void ip_charjoin(t_ip *ip, char ch)
+void	ip_charjoin(t_ip *ip, char ch)
 {
-	char *s;
-	char *tmp;
+	char	*s;
+	char	*tmp;
 
 	s = ft_calloc(sizeof(char), 2);
-	s[0] = ch; 
+	s[0] = ch;
 	tmp = ip->id_string;
 	ip->id_string = ft_strjoin(ip->id_string, s);
 	free(s);
 	free(tmp);
 }
 
-char next_ch(t_dlist **line, t_ip *ip)
+char	next_ch(t_dlist **line, t_ip *ip)
 {
 	if (*line != NULL)
 	{
-		ip->ch = ((char*)(*line)->content)[0];
+		ip->ch = ((char *)(*line)->content)[0];
 		*line = (*line)->next;
 	}
 	else
@@ -25,10 +25,9 @@ char next_ch(t_dlist **line, t_ip *ip)
 	return (ip->ch);
 }
 
-void save_token(t_ip *ip, t_list **tokens)
+void	save_token(t_ip *ip, t_list **tokens)
 {
 	t_ip	*tmp;
-
 
 	tmp = malloc(sizeof(t_ip));
 	*tmp = *ip;
@@ -36,14 +35,14 @@ void save_token(t_ip *ip, t_list **tokens)
 	ip->id_string = ft_calloc(sizeof(char), 1);
 }
 
-void get_token(t_dlist **line, t_ip *ip, t_list **tokens)
+void	get_token(t_dlist **line, t_ip *ip, t_list **tokens)
 {
 	while (ip->ch == ' ' || ip->ch == '\t')
 		next_ch(line, ip);
 	if (ip->ch == '\0')
 	{
 		ip->sy = INPUT_END;
-		return;
+		return ;
 	}
 	else if (ft_strchr("|&><", ip->ch) == NULL)
 		literal(line, ip, tokens);
@@ -51,14 +50,13 @@ void get_token(t_dlist **line, t_ip *ip, t_list **tokens)
 		metacharacter(line, ip);
 }
 
-void lexer(t_dlist *line, t_list **tokens)
+void	lexer(t_dlist *line, t_list **tokens)
 {
-	t_ip ip;
+	t_ip	ip;
 
 	*tokens = NULL;
 	ip.id_string = ft_calloc(sizeof(char), 1);
 	next_ch(&line, &ip);
-
 	while (ip.ch != '\0')
 	{
 		get_token(&line, &ip, tokens);
