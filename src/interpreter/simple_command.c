@@ -1,16 +1,16 @@
 #include "../../includes/minishell.h"
 
-static void execute_extern_cmd(char **args, t_shell *shell)
+static void	execute_extern_cmd(char **args, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
-	if (pid < 0)	
+	if (pid < 0)
 	{
 		ft_putendl_fd(strerror(errno), 2);
 		shell->exit_status = 1;
-		return;
+		return ;
 	}
 	else if (pid == 0)
 	{
@@ -27,7 +27,7 @@ static void execute_extern_cmd(char **args, t_shell *shell)
 	}
 }
 
-void exec_simplecmd(t_list *datas, t_shell *shell)
+void	exec_simplecmd(t_list *datas, t_shell *shell)
 {
 	t_data	*data;
 	char	**args;
@@ -36,13 +36,13 @@ void exec_simplecmd(t_list *datas, t_shell *shell)
 	if (data->words == NULL)
 	{
 		assign_variable(&data->vars, shell);
-		return;
+		return ;
 	}
 	args = expand_words(data->words, shell, true);
 	if (redirect(&data->fds, shell) == FAIL)
 	{
 		dp_free(args);
-		return;
+		return ;
 	}
 	if (lookup_bltin(args))
 		execute_bltin(args, shell);
@@ -50,4 +50,3 @@ void exec_simplecmd(t_list *datas, t_shell *shell)
 		execute_extern_cmd(args, shell);
 	dp_free(args);
 }
-
