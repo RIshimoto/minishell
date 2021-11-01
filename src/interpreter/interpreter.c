@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static bool check_operator(t_gmr *gmr, t_shell *shell)
+static bool	check_operator(t_gmr *gmr, t_shell *shell)
 {
 	if (gmr->op == ANDAND_OP)
 	{
@@ -15,31 +15,36 @@ static bool check_operator(t_gmr *gmr, t_shell *shell)
 	return (true);
 }
 
-static void set_stdfd(t_stdfd *stdfd)
+static void	set_stdfd(t_stdfd *stdfd)
 {
 	stdfd->in = dup(0);
 	stdfd->out = dup(1);
 	stdfd->err = dup(2);
 }
 
-static void get_stdfd(t_stdfd *stdfd)
+static void	get_stdfd(t_stdfd *stdfd)
 {
 	dup2(stdfd->in, 0);
 	dup2(stdfd->out, 1);
 	dup2(stdfd->err, 2);
 }
 
-void interpreter(t_list *gmrs, t_shell *shell)
+static void	init_param(bool *run, t_stdfd *stdfd)
+{
+	*run = true;
+	stdfd->in = 0;
+	stdfd->out = 1;
+	stdfd->err = 2;
+}
+
+void	interpreter(t_list *gmrs, t_shell *shell)
 {
 	int		pfd[2];
 	t_gmr	*gmr;
 	bool	run;
 	t_stdfd	stdfd;
 
-	run = true;
-	stdfd.in = 0;
-	stdfd.out = 1;
-	stdfd.err = 2;
+	init_param(&run, &stdfd);
 	set_signal();
 	while (gmrs != NULL)
 	{
