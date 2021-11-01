@@ -1,23 +1,23 @@
 #include "../../../includes/minishell.h"
 
-static int strcmp_ignorecase(const char* s1, const char* s2)
+static int	strcmp_ignorecase(const char *s1, const char *s2)
 {
 	while (ft_tolower(*s1) == ft_tolower(*s2))
 	{
 		if (*s1 == '\0')
-			return 0;
+			return (0);
 		++s1;
 		++s2;
 	}
 	return (ft_tolower(*s1) - ft_tolower(*s2));
 }
 
-static void sort(char **tab)
+static void	sort(char **tab)
 {
-	char *tmp;
-	int i;
-	int j;
-	int n;
+	char	*tmp;
+	int		i;
+	int		j;
+	int		n;
 
 	n = 0;
 	while (tab[n] != NULL)
@@ -38,34 +38,32 @@ static void sort(char **tab)
 	}
 }
 
-bool match(char *s1, char *s2)
+bool	match(char *s1, char *s2)
 {
-
-	if(s1[0] == '\0' && s2[0] == '\0')
-		return true;
-
-	if(s1[0] == '*')
+	if (s1[0] == '\0' && s2[0] == '\0')
+		return (true);
+	if (s1[0] == '*')
 	{
-		if(s2[0] == '\0')
+		if (s2[0] == '\0')
 			return (match(&s1[1], &s2[0]));
 		else
 		{
-			if(match(&s1[1], &s2[0]) == true)
-				return true;
+			if (match(&s1[1], &s2[0]) == true)
+				return (true);
 			else
-				return match(&s1[0], &s2[1]);
+				return (match(&s1[0], &s2[1]));
 		}
 	}
-	if(s1[0] == s2[0])
-		return match(&s1[1] , &s2[1]);
+	if (s1[0] == s2[0])
+		return (match(&s1[1], &s2[1]));
 	return (false);
 }
 
-static char **ft_dstrjoin(char **src, char **dest)
+static char	**ft_dstrjoin(char **src, char **dest)
 {
-	char **result;
-	int i;
-	int j;
+	char	**result;
+	int		i;
+	int		j;
 
 	result = ft_calloc2(sizeof(char), 1);
 	if (src != NULL)
@@ -91,7 +89,7 @@ static char **ft_dstrjoin(char **src, char **dest)
 	return (result);
 }
 
-static char **recursive(char *dty, char **str)
+static char	**recursive(char *dty, char **str)
 {
 	DIR				*dir;
 	struct dirent	*dp;
@@ -101,15 +99,17 @@ static char **recursive(char *dty, char **str)
 	char			*tmp;
 	
 	store = ft_calloc2(sizeof(char *), 1);
-	if ((dir = opendir(dty)) == NULL)
+	dir = opendir(dty);
+	if (dir == NULL)
 	{
 		ft_putendl_fd(strerror(errno), 2);
 		return (NULL);
 	}
-	while ((dp = readdir(dir)) != NULL)
+	dp = readdir(dir);
+	while (dp != NULL)
 	{
 		if (dp->d_name[0] == '.')
-			continue;
+			continue ;
 		if (match(*str, dp->d_name))
 		{
 			if (*(str + 1) == NULL)
@@ -117,7 +117,7 @@ static char **recursive(char *dty, char **str)
 			else
 			{
 				if (stat(dp->d_name, &st) != 0)
-					continue;
+					continue ;
 				if ((st.st_mode & S_IFMT) == S_IFDIR)
 					store = ft_dstrjoin(store, recursive(dp->d_name, str+1));
 				else
@@ -134,17 +134,16 @@ static char **recursive(char *dty, char **str)
 	return (store);
 }
 
-
-void wildcard(t_ip *ip, t_list **tokens)
+void	wildcard(t_ip *ip, t_list **tokens)
 {
-	char 	**store;
-	char 	**str;
+	char	**store;
+	char	**str;
 	int		i;
 
 	str = ft_split(ip->id_string, '/');
 	store = recursive(".", str);
 	if (store == NULL)
-		return;
+		return ;
 	sort(store);
 	i = -1;
 	while (store[++i] != NULL)
