@@ -6,6 +6,8 @@ char	**ft_realloc2(char **old, char *add)
 	int		len;
 	int		i;
 
+	if (add == NULL)
+		return (old);
 	len = 0;
 	while (old[len] != NULL)
 		len++;

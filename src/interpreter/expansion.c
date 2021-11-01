@@ -1,155 +1,24 @@
 #include "../../includes/minishell.h"
 
-static char now_word(char **word)
+char	now_word(char **word)
 {
 	return (**word);
 }
 
-static char next_word(char **word)
+char	next_word(char **word)
 {
 	if (**word != '\0')
 		(*word)++;
-	return **word;
+	return (**word);
 }
 
-char *parameter(char **word, t_shell *shell)
+char	**expand_word(char *word, t_shell *shell, bool quote)
 {
-	char *key;
-	char *val;
-	char ch;
+	char	**args;
+	char	*arg;
+	char	ch;
 
-	key = ft_calloc(sizeof(char), 1);
-	ch = next_word(word);
-		if (ch == '?')
-		{
-			next_word(word);
-			free(key);
-			return (ft_itoa(shell->exit_status));
-		}
-		if (!ft_issnack_case(ch))
-		{
-			free(key);
-			return (ft_strdup("$"));
-		}
-		while (ft_issnack_case(ch))
-		{
-			ft_charjoin(&key, ch);
-			ch = next_word(word);
-		}
-	val = getenv(key);
-	free(key);
-	if (val == NULL)
-		return (NULL);
-	return (ft_strdup(val));
-}
-
-static void dollar(char **word, char **arg, char ***args, t_shell *shell)
-{
-	char *val;
-	int i;
-
-	val = parameter(word, shell);
-	if (val == NULL)
-		return;
-	i = 0;
-	while(val[i] != '\0')
-	{
-		if (ft_strchr(" \t\n", val[i]) != NULL)
-		{
-			*args = ft_realloc2(*args, *arg);
-			*arg = NULL;
-		}
-		else
-			ft_charjoin(arg, val[i]);
-		i++;
-	}
-	free(val);
-}
-
-static bool is_closed(char *word, char **arg)
-{
-	char ch;
-	char end_ch;
-
-	ch = next_word(&word);
-	end_ch = now_word(&word);
-	while (ch != end_ch)
-	{
-		if (ch == '\0')
-		{
-			ch = now_word(&word);
-			ft_charjoin(arg, ch);
-			return false;
-		}
-		ch = next_word(&word);
-	}
-	return true;
-}
-
-static void double_quote(char **word, char **arg, char ***args, t_shell *shell)
-{
-	char ch;
-	char *tmp;
-
-	tmp = *arg;
-	*arg = ft_strjoin(*arg, "");
-	free(tmp);
-	is_closed(*word, arg);
-	ch = next_word(word);
-	while (ch != '\"')
-	{
-		if (ch == '\0')
-			break;
-		if (ch == '$')
-		{
-			dollar(word, arg, args, shell);
-			ch = now_word(word);
-		}
-		else
-		{
-			ft_charjoin(arg, ch);
-			ch = next_word(word);
-		}
-	}
-	next_word(word);
-}
-
-static void single_quote(char **word, char **arg, char ***args, t_shell *shell)
-{
-	char ch;
-	bool quote;
-	char *tmp;
-
-	tmp = *arg;
-	*arg = ft_strjoin(*arg, "");
-	free(tmp);
-	quote = is_closed(*word, arg);
-	ch = next_word(word);
-	while (ch != '\'')
-	{
-		if (ch == '\0')
-			break;
-		if (ch == '$' && !quote)
-		{
-			dollar(word, arg, args, shell);
-			ch = now_word(word);
-		}
-		else
-		{
-			ft_charjoin(arg, ch);
-			ch = next_word(word);
-		}
-	}
-	next_word(word);
-}
-
-char **expand_word(char *word, t_shell *shell, bool quote)
-{
-	char **args;
-	char *arg;
-	char ch;
-
-	args = ft_calloc2(sizeof(char*), 1);
+	args = ft_calloc2(sizeof(char *), 1);
 	arg = NULL;
 	ch = now_word(&word);
 	while (*word != '\0')
@@ -163,24 +32,20 @@ char **expand_word(char *word, t_shell *shell, bool quote)
 		else if (ch == '$')
 			dollar(&word, &arg, &args, shell);
 		else
-		{
-			ft_charjoin(&arg, ch);
-			ch = next_word(&word);
-		}
+			str(&arg, &ch, &word);
 		ch = now_word(&word);
 	}
-	if (arg != NULL)
-		args = ft_realloc2(args, arg);
-	return args;
+	args = ft_realloc2(args, arg);
+	return (args);
 }
 
-char **expand_words(t_list *words, t_shell *shell, bool quote)
+char	**expand_words(t_list *words, t_shell *shell, bool quote)
 {
 	char	**args;
 	char	**ret;
 	int		i;
 
-	args = ft_calloc2(sizeof(char*), 1);
+	args = ft_calloc2(sizeof(char *), 1);
 	while (words != NULL)
 	{
 		ret = expand_word(words->content, shell, quote);

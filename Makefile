@@ -21,6 +21,8 @@ SRCS = \
 	src/interpreter/execute_bltin.c \
 	src/interpreter/assign_variable.c \
 	src/interpreter/expansion.c \
+	src/interpreter/expansion_char.c \
+	src/interpreter/expansion_param.c \
 	src/interpreter/redirect.c \
 	src/interpreter/here_documents.c \
 	src/interpreter/signal.c \
