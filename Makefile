@@ -24,6 +24,8 @@ SRCS = \
 	src/interpreter/expansion_char.c \
 	src/interpreter/expansion_param.c \
 	src/interpreter/redirect.c \
+	src/interpreter/redirect_err.c \
+	src/interpreter/redirect_util.c \
 	src/interpreter/here_documents.c \
 	src/interpreter/signal.c \
 	src/shell_variable/get_shell_var.c \

@@ -216,6 +216,14 @@ void	double_quote(char **word, char **arg, char ***args, t_shell *shell);
 void	single_quote(char **word, char **arg, char ***args, t_shell *shell);
 int		redirect(t_queue *fds, t_shell *shell);
 void	here_documents(char *end_word, t_shell *shell);
+bool	is_descriptor_err(int n, t_shell *shell);
+bool	is_ambiguous_err(char **expand_file_name, \
+char *file_name, t_shell *shell);
+int		without_here_documents(char *rdt, \
+char **expand_file_name, int n, t_shell *shell);
+int		gt(char *file, int n, t_shell *shell);
+int		dgt(char *file, int n, t_shell *shell);
+int		lt(char *file, int n, t_shell *shell);
 void	set_signal(void);
 void	set_signal_ign(void);
 void	set_signal_dfl(void);
