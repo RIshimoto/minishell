@@ -97,7 +97,7 @@ static char	**recursive(char *dty, char **str)
 	char			**store;
 	char			*s;
 	char			*tmp;
-	
+
 	store = ft_calloc2(sizeof(char *), 1);
 	dir = opendir(dty);
 	if (dir == NULL)
@@ -108,27 +108,30 @@ static char	**recursive(char *dty, char **str)
 	dp = readdir(dir);
 	while (dp != NULL)
 	{
-		if (dp->d_name[0] == '.')
-			continue ;
-		if (match(*str, dp->d_name))
+		if (dp->d_name[0] != '.')
 		{
-			if (*(str + 1) == NULL)
-				store = ft_realloc2(store, ft_strdup(dp->d_name));
-			else
+			if (match(*str, dp->d_name))
 			{
-				if (stat(dp->d_name, &st) != 0)
-					continue ;
-				if ((st.st_mode & S_IFMT) == S_IFDIR)
-					store = ft_dstrjoin(store, recursive(dp->d_name, str+1));
+				if (*(str + 1) == NULL)
+					store = ft_realloc2(store, ft_strdup(dp->d_name));
 				else
 				{
-					tmp = ft_strjoin(dty, "/");
-					s = ft_strjoin(tmp, dp->d_name);
-					free(tmp);
-					store = ft_realloc2(store, s);
+					if (stat(dp->d_name, &st) == 0)
+					{
+					if ((st.st_mode & S_IFMT) == S_IFDIR)
+						store = ft_dstrjoin(store, recursive(dp->d_name, str+1));
+					else
+					{
+						tmp = ft_strjoin(dty, "/");
+						s = ft_strjoin(tmp, dp->d_name);
+						free(tmp);
+						store = ft_realloc2(store, s);
+					}
+					}
 				}
 			}
 		}
+		dp = readdir(dir);
 	}
 	closedir(dir);
 	return (store);
