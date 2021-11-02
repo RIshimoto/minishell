@@ -67,7 +67,7 @@ typedef struct s_stdfd		t_stdfd;
  * identify : string
  * input_end : end of input
  * err : error
- * token_num : dont care 
+ * token_num : dont care
 */
 enum e_token
 {
@@ -211,9 +211,9 @@ char	now_word(char **word);
 char	next_word(char **word);
 char	*parameter(char **word, t_shell *shell);
 void    str(char **arg, char *ch, char **word);
-void	dollar(char **word, char **arg, char ***args, t_shell *shell);
-void	double_quote(char **word, char **arg, char ***args, t_shell *shell);
-void	single_quote(char **word, char **arg, char ***args, t_shell *shell);
+void	expansion_dollar(char **word, char **arg, char ***args, t_shell *shell);
+void	expansion_double_quote(char **word, char **arg, char ***args, t_shell *shell);
+void	expansion_single_quote(char **word, char **arg, char ***args, t_shell *shell);
 int		redirect(t_queue *fds, t_shell *shell);
 void	here_documents(char *end_word, t_shell *shell);
 bool	is_descriptor_err(int n, t_shell *shell);

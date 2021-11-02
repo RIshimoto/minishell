@@ -26,11 +26,11 @@ char	**expand_word(char *word, t_shell *shell, bool quote)
 		while (ch == ' ')
 			ch = next_word(&word);
 		if (quote && ch == '\'')
-			single_quote(&word, &arg, &args, shell);
+			expansion_single_quote(&word, &arg, &args, shell);
 		else if (quote && ch == '\"')
-			double_quote(&word, &arg, &args, shell);
+			expansion_double_quote(&word, &arg, &args, shell);
 		else if (ch == '$')
-			dollar(&word, &arg, &args, shell);
+			expansion_dollar(&word, &arg, &args, shell);
 		else
 			str(&arg, &ch, &word);
 		ch = now_word(&word);

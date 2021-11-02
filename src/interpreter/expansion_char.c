@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	dollar(char **word, char **arg, char ***args, t_shell *shell)
+void	expansion_dollar(char **word, char **arg, char ***args, t_shell *shell)
 {
 	char	*val;
 	int		i;
@@ -43,7 +43,7 @@ static bool	is_closed(char *word, char **arg)
 	return (true);
 }
 
-void	double_quote(char **word, char **arg, char ***args, t_shell *shell)
+void	expansion_double_quote(char **word, char **arg, char ***args, t_shell *shell)
 {
 	char	ch;
 	char	*tmp;
@@ -59,7 +59,7 @@ void	double_quote(char **word, char **arg, char ***args, t_shell *shell)
 			break ;
 		if (ch == '$')
 		{
-			dollar(word, arg, args, shell);
+			expansion_dollar(word, arg, args, shell);
 			ch = now_word(word);
 		}
 		else
@@ -71,7 +71,7 @@ void	double_quote(char **word, char **arg, char ***args, t_shell *shell)
 	next_word(word);
 }
 
-void	single_quote(char **word, char **arg, char ***args, t_shell *shell)
+void	expansion_single_quote(char **word, char **arg, char ***args, t_shell *shell)
 {
 	char	ch;
 	bool	quote;
@@ -88,7 +88,7 @@ void	single_quote(char **word, char **arg, char ***args, t_shell *shell)
 			break ;
 		if (ch == '$' && !quote)
 		{
-			dollar(word, arg, args, shell);
+			expansion_dollar(word, arg, args, shell);
 			ch = now_word(word);
 		}
 		else
