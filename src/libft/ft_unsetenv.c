@@ -1,8 +1,8 @@
 #include "../../includes/libft.h"
 
-static void dp_free(char **str)
+static void	dp_free(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != NULL)

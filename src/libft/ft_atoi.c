@@ -9,10 +9,20 @@ static int	is_space(int c)
 		return (0);
 }
 
+static void	set_minus(const char *str, int	*minus, int *i)
+{
+	if ((str[*i] == '-' || str[*i] == '+') && str[*i])
+	{
+		if (str[*i] == '-')
+			*minus *= -1;
+		(*i)++;
+	}
+}
+
 long long	ft_atoi(const char *str)
 {
-	int			i;
-	int			minus;
+	int					i;
+	int					minus;
 	unsigned long long	ans;
 
 	ans = 0;
@@ -20,12 +30,7 @@ long long	ft_atoi(const char *str)
 	i = 0;
 	while (is_space(str[i]))
 		i++;
-	if ((str[i] == '-' || str[i] == '+') && str[i])
-	{
-		if (str[i] == '-')
-			minus *= -1;
-		i++;
-	}
+	set_minus(str, &minus, &i);
 	while (str[i] && ft_isdigit(str[i]))
 	{
 		ans = ans * 10 + (str[i++] - '0');
@@ -33,7 +38,8 @@ long long	ft_atoi(const char *str)
 		{
 			errno = ERANGE;
 			return (LLONG_MAX);
-		}else if (ans - 1 > LLONG_MAX && minus == -1)
+		}
+		else if (ans - 1 > LLONG_MAX && minus == -1)
 		{
 			errno = ERANGE;
 			return ((LLONG_MIN));
