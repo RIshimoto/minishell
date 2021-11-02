@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void add_to_environ(char *var)
+static void	add_to_environ(char *var)
 {
 	extern char	**environ;
 	static char	**last_environ;
@@ -25,13 +25,13 @@ static void add_to_environ(char *var)
 	last_environ = environ;
 }
 
-void set_environ(t_shell *shell, char *name)
+void	set_environ(t_shell *shell, char *name)
 {
 	extern char	**environ;
 	char		**ep;
 	char		*var;
 
-	if(name == NULL)
+	if (name == NULL)
 		return ;
 	var = get_shell_var(shell, name);
 	ep = environ;
