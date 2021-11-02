@@ -194,6 +194,7 @@ void	metacharacter(t_dlist **line, t_ip *ip);
 
 // parser
 void	parser(t_list *tokens, t_shell *shell);
+void	next_token(t_ip *ip, t_list **tokens);
 
 // interpreter
 void	interpreter(t_list *gmrs, t_shell *shell);

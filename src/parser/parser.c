@@ -1,33 +1,27 @@
 #include "../../includes/minishell.h"
 
-static void	next_token(t_ip *ip, t_list **tokens)
-{
-	if (ip->sy == ERR)
-		return;
-	*tokens = (*tokens)->next;
-	*ip = *(t_ip*)(*tokens)->content;
-}
-
-static void simple_command(t_ip *ip, t_list **tokens, t_data **data)
+static void	init_data(t_data **data)
 {
 	*data = malloc(sizeof(t_data));
 	(*data)->fds = NULL;
 	(*data)->vars = NULL;
 	(*data)->words = NULL;
+}
 
+static void	simple_command(t_ip *ip, t_list **tokens, t_data **data)
+{
+	init_data(data);
 	while (ip->sy == IDENTIFY)
 	{
 		if (ft_strchr(ip->id_string, '=') != NULL)
 			enq(&(*data)->vars, ip->id_string);
-		else
-			break;
-		next_token(ip, tokens);
+		break ;
 	}
-
 	while (ip->sy == IDENTIFY || ip->sy == REDIRECT)
 	{
 		if (ip->sy == IDENTIFY)
-			ft_lstadd_back(&(*data)->words, ft_lstnew(ft_strdup(ip->id_string)));
+			ft_lstadd_back(&(*data)->words, \
+ft_lstnew(ft_strdup(ip->id_string)));
 		else if (ip->sy == REDIRECT)
 		{
 			enq(&(*data)->fds, ip->id_string);
@@ -41,9 +35,9 @@ static void simple_command(t_ip *ip, t_list **tokens, t_data **data)
 	}
 }
 
-static void pipeline(t_ip *ip, t_list **tokens, t_gmr **gmr)
+static void	pipeline(t_ip *ip, t_list **tokens, t_gmr **gmr)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = NULL;
 	simple_command(ip, tokens, &data);
@@ -67,9 +61,9 @@ static void pipeline(t_ip *ip, t_list **tokens, t_gmr **gmr)
 		(*gmr)->exec_env = MAINSHELL;
 }
 
-static void lists(t_ip *ip, t_list **tokens, t_list **gmrs)
+static void	lists(t_ip *ip, t_list **tokens, t_list **gmrs)
 {
-	t_gmr *gmr;
+	t_gmr	*gmr;
 
 	gmr = NULL;
 	while (ip->sy == IDENTIFY || ip->sy == REDIRECT)
@@ -91,12 +85,11 @@ static void lists(t_ip *ip, t_list **tokens, t_list **gmrs)
 	}
 }
 
-
-void parser(t_list *tokens, t_shell *shell)
+void	parser(t_list *tokens, t_shell *shell)
 {
 	t_ip	ip;
 	t_list	*gmrs;
-	
+
 	ip = *(t_ip *)tokens->content;
 	gmrs = NULL;
 	lists(&ip, &tokens, &gmrs);

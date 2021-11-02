@@ -13,6 +13,7 @@ SRCS = \
 	src/lexer/metacharacter/metacharacter.c \
 	src/lexer/literal/wildcard.c \
 	src/parser/parser.c \
+	src/parser/next_token.c \
 	src/interpreter/interpreter.c \
 	src/interpreter/pipeline.c \
 	src/interpreter/simple_command.c \
