@@ -1,9 +1,9 @@
 #include "../../includes/queue.h"
 
-void *deq(t_queue *this)
+void	*deq(t_queue *this)
 {
-	t_list *tmp;
-	void *ret;
+	t_list	*tmp;
+	void	*ret;
 
 	if (*this == NULL)
 		return (NULL);
