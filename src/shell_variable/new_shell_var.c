@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void init(t_shell *this)
+static void	init(t_shell *this)
 {
 	int	i;
 
@@ -17,28 +17,29 @@ static void init(t_shell *this)
 	this->exit_status = 0;
 }
 
-static void open_clipboard(t_shell *shell)
+static void	open_clipboard(t_shell *shell)
 {
-	char 	*path;
+	char	*path;
 	int		fd;
 
 	fd = open(".minishell_clipboard", O_RDWR | O_CREAT, S_IWRITE | S_IREAD);
 	if (fd < 0)
-		return;
+		return ;
 	path = getcwd(NULL, 0);
 	shell->clipboard_path = ft_strjoin(path, "/.minishell_clipboard");
 	free(path);
 	close(fd);
 }
 
-static void read_history_file(t_shell *shell)
+static void	read_history_file(t_shell *shell)
 {
 	char	*line;
-	char 	*path;
+	char	*path;
 	int		fd;
 
-	if ((fd = open(".minishell_history", O_RDONLY | O_CREAT, S_IREAD | S_IWRITE)) < 0)
-		return;
+	fd = open(".minishell_history", O_RDONLY | O_CREAT, S_IREAD | S_IWRITE);
+	if (fd < 0)
+		return ;
 	path = getcwd(NULL, 0);
 	shell->histfile_path = ft_strjoin(path, "/.minishell_history");
 	while (get_next_line(fd, &line) > 0)
@@ -49,7 +50,7 @@ static void read_history_file(t_shell *shell)
 	close(fd);
 }
 
-void new_shell_var(t_shell *this)
+void	new_shell_var(t_shell *this)
 {
 	extern char	**environ;
 	int			i;

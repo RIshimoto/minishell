@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char *get_shell_var(t_shell *this, char *name)
+char	*get_shell_var(t_shell *this, char *name)
 {
 	t_list	*top;
 	int		h;
@@ -15,4 +15,3 @@ char *get_shell_var(t_shell *this, char *name)
 	}
 	return (NULL);
 }
-

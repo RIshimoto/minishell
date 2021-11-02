@@ -1,10 +1,10 @@
 #include "../../includes/minishell.h"
 
-int hash(char *name)
+int	hash(char *name)
 {
-	int i;
-	int h;
-	
+	int	i;
+	int	h;
+
 	h = 0;
 	i = 0;
 	while (name[i] != '\0')
