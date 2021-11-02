@@ -1,18 +1,19 @@
 #include "../../includes/minishell.h"
 
-static int		outc(int c)
+static int	outc(int c)
 {
-	return write(1, &c, 1);
+	return (write(1, &c, 1));
 }
 
-void			term_mode(char *p, int arg_cols, int arg_rows)
+void	term_mode(char *p, int arg_cols, int arg_rows)
 {
 	char	buf[BUFFER_SIZE];
 	char	*term;
 	char	*cptr;
 	int		n;
 
-	if ((term = getenv("TERM")) == NULL)
+	term = getenv("TERM");
+	if (term == NULL)
 	{
 		ft_putendl_fd("Error: getenv", 2);
 		exit(1);
@@ -23,52 +24,14 @@ void			term_mode(char *p, int arg_cols, int arg_rows)
 		exit(1);
 	}
 	cptr = buf;
+	n = tgetnum(p);
 	if (tgetstr(p, &cptr) != NULL)
 		tputs(tgoto(buf, arg_cols, arg_rows), 1, outc);
-	else if ((n = tgetnum(p)) != -1)
+	else if (n != -1)
 		(void)printf("%d\n", n);
 }
 
-static int		prompt_input(t_dlist **cursor, char *ps, t_shell *shell)
-{
-	char	key;
-	t_pos	pos;
-
-	init_pos(&pos, ps);
-	while(1)
-	{
-		read(0, &key, 1);
-		if (key == CTRL_SPACE)
-			select_mode(&pos, cursor);
-		else if(key == CTRLV)
-			paste(&pos, cursor, shell);
-		else if(key == CTRLX)
-			cut(&pos, cursor, shell);
-		else if(key == CTRLY)
-			copy(&pos, cursor, shell);
-		else if (key == ESC)
-			esc(&pos, cursor, shell);
-		else if (key == BKS)
-			backspace(&pos, cursor);
-		else if (key == DEL)
-			delete(&pos, cursor);
-		else if (key == LF || key == CTRLC)
-		{
-			ft_putchar_fd('\n', 1);
-			return (key);
-		}
-		else if (key == CTRLD)
-		{
-			if ((*cursor)->next == NULL && (*cursor)->prev == NULL)
-				return (key);
-			delete(&pos, cursor);
-		}
-		else if (ft_isprint(key) || key == TAB)
-			insert(cursor, key, &pos);
-	}
-}
-
-static int		prompt_loop(char *ps, t_dlist **line, t_shell *shell)
+static int	prompt_loop(char *ps, t_dlist **line, t_shell *shell)
 {
 	int	ret;
 
@@ -93,7 +56,7 @@ static int		prompt_loop(char *ps, t_dlist **line, t_shell *shell)
 	return (LF);
 }
 
-void			prompt(char *ps, t_dlist **line, t_shell *shell)
+void	prompt(char *ps, t_dlist **line, t_shell *shell)
 {
 	struct termios	tty;
 	struct termios	tty_save;

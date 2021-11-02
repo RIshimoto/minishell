@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void		init_pos(t_pos *pos, char *ps)
+void	init_pos(t_pos *pos, char *ps)
 {
 	pos->cursor = ft_strlen(ps);
 	pos->max_lf = ft_strlen(ps);
@@ -10,9 +10,9 @@ void		init_pos(t_pos *pos, char *ps)
 	pos->selectp = NULL;
 }
 
-void		backspace(t_pos *pos, t_dlist **cursor)
+void	backspace(t_pos *pos, t_dlist **cursor)
 {
-	t_dlist *tmp;
+	t_dlist	*tmp;
 
 	if (pos->max_lf < pos->cursor)
 	{
@@ -24,7 +24,7 @@ void		backspace(t_pos *pos, t_dlist **cursor)
 	}
 }
 
-void		esc(t_pos *pos, t_dlist **cursor, t_shell *shell)
+void	esc(t_pos *pos, t_dlist **cursor, t_shell *shell)
 {
 	char	key;
 
@@ -32,27 +32,27 @@ void		esc(t_pos *pos, t_dlist **cursor, t_shell *shell)
 	if (key == '[')
 	{
 		read(0, &key, 1);
-		if(key == 'A')
+		if (key == 'A')
 			history_prev(pos, cursor, shell);
-		else if(key == 'B')
+		else if (key == 'B')
 			history_next(pos, cursor, shell);
-		else if(key == 'C')
+		else if (key == 'C')
 			move_to_rg(pos, cursor);
-		else if(key == 'D')
+		else if (key == 'D')
 			move_to_lf(pos, cursor);
-		else if(key == 'F')
+		else if (key == 'F')
 			move_to_end(pos, cursor);
-		else if(key == 'H')
+		else if (key == 'H')
 			move_to_home(pos, cursor);
-		else if(key == '1')
+		else if (key == '1')
 			move_to_word(pos, cursor);
 	}
 }
 
-void		insert(t_dlist **cursor, char c, t_pos *pos)
+void	insert(t_dlist **cursor, char c, t_pos *pos)
 {
 	char	*s;
-	t_dlist *new;
+	t_dlist	*new;
 
 	ft_putchar_fd(c, 1);
 	s = ft_calloc(sizeof(char), 2);
@@ -67,7 +67,7 @@ void		insert(t_dlist **cursor, char c, t_pos *pos)
 	pos->cursor++;
 }
 
-void		delete(t_pos *pos, t_dlist **cursor)
+void	delete(t_pos *pos, t_dlist **cursor)
 {
 	if (pos->cursor < pos->max_rg)
 	{

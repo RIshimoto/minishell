@@ -148,6 +148,7 @@ void	minishell_end(t_shell *shell);
 
 // prompt
 void	prompt(char *ps, t_dlist **line, t_shell *shell);
+int		prompt_input(t_dlist **cursor, char *ps, t_shell *shell);
 void	term_mode(char *p, int arg_cols, int arg_rows);
 
 // prompt_utils

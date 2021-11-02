@@ -36,9 +36,11 @@ SRCS = \
 	src/shell_variable/get_next_line.c \
 	src/shell_variable/hash.c \
 	src/prompt/prompt.c \
+	src/prompt/prompt_input.c \
 	src/prompt/prompt_utils.c \
 	src/prompt/copy_and_paste.c \
 	src/prompt/move.c \
+	src/prompt/move_four_directions.c \
 	src/prompt/history.c \
 	src/bltin/cd.c \
 	src/bltin/cd_path.c\
