@@ -184,11 +184,13 @@ void	get_token(t_dlist **line, t_ip *ip, t_list **tokens);
 void	save_token(t_ip *ip, t_list **tokens);
 char	next_ch(t_dlist **line, t_ip *ip);
 void	ip_charjoin(t_ip *ip, char ch);
+void	sort(char **tab);
 
 //	literal
 void	literal(t_dlist **line, t_ip *ip, t_list **tokens);
 void	quoting(t_dlist **line, t_ip *ip);
 void	wildcard(t_ip *ip, t_list **tokens);
+char    **recursive(char *dty, char **str);
 
 //	metachcharacter
 void	metacharacter(t_dlist **line, t_ip *ip);

@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
-static void	prompt_action(char key, t_pos *pos, t_dlist **cursor, t_shell *shell)
+static void	prompt_action(char key, t_pos *pos, \
+		t_dlist **cursor, t_shell *shell)
 {
 	if (key == CTRL_SPACE)
 		select_mode(pos, cursor);
@@ -43,4 +44,3 @@ int	prompt_input(t_dlist **cursor, char *ps, t_shell *shell)
 			insert(cursor, key, &pos);
 	}
 }
-

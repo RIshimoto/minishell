@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	*calc_new_param(char *param, t_list *lst, char *name)
+static char	*calc_new_param(char *param, t_list *lst, char *name)
 {
 	char	*tmp;
 	char	*appended_value;

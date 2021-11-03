@@ -1,44 +1,6 @@
 #include "../../../includes/minishell.h"
 
-static int	strcmp_ignorecase(const char *s1, const char *s2)
-{
-	while (ft_tolower(*s1) == ft_tolower(*s2))
-	{
-		if (*s1 == '\0')
-			return (0);
-		++s1;
-		++s2;
-	}
-	return (ft_tolower(*s1) - ft_tolower(*s2));
-}
-
-static void	sort(char **tab)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-	int		n;
-
-	n = 0;
-	while (tab[n] != NULL)
-		n++;
-	i = -1;
-	while (++i < n - 1)
-	{
-		j = n;
-		while (--j > i)
-		{
-			if (strcmp_ignorecase(tab[j], tab[j - 1]) < 0)
-			{
-				tmp = tab[j - 1];
-				tab[j - 1] = tab[j];
-				tab[j] = tmp;
-			}
-		}
-	}
-}
-
-bool	match(char *s1, char *s2)
+static bool	match(char *s1, char *s2)
 {
 	if (s1[0] == '\0' && s2[0] == '\0')
 		return (true);
@@ -78,25 +40,39 @@ static char	**ft_dstrjoin(char **src, char **dest)
 	}
 	if (dest != NULL)
 	{	
-		j = 0;
-		while (dest[j] != NULL)
-		{
+		j = -1;
+		while (dest[++j] != NULL)
 			result = ft_realloc2(result, ft_strdup(dest[j]));
-			j++;
-		}
 		free(dest);
 	}
 	return (result);
 }
 
-static char	**recursive(char *dty, char **str)
+static void	save_store(char ***store, struct dirent *dp, char **str, char *dty)
+{
+	char		*s;
+	char		*tmp;
+	struct stat	st;
+
+	if (stat(dp->d_name, &st) == 0)
+	{
+		if ((st.st_mode & S_IFMT) == S_IFDIR)
+			*store = ft_dstrjoin(*store, recursive(dp->d_name, str + 1));
+		else
+		{
+			tmp = ft_strjoin(dty, "/");
+			s = ft_strjoin(tmp, dp->d_name);
+			free(tmp);
+			*store = ft_realloc2(*store, s);
+		}
+	}
+}
+
+char	**recursive(char *dty, char **str)
 {
 	DIR				*dir;
 	struct dirent	*dp;
-	struct stat		st;
 	char			**store;
-	char			*s;
-	char			*tmp;
 
 	store = ft_calloc2(sizeof(char *), 1);
 	dir = opendir(dty);
@@ -108,28 +84,12 @@ static char	**recursive(char *dty, char **str)
 	dp = readdir(dir);
 	while (dp != NULL)
 	{
-		if (dp->d_name[0] != '.')
+		if (dp->d_name[0] != '.' && match(*str, dp->d_name))
 		{
-			if (match(*str, dp->d_name))
-			{
-				if (*(str + 1) == NULL)
-					store = ft_realloc2(store, ft_strdup(dp->d_name));
-				else
-				{
-					if (stat(dp->d_name, &st) == 0)
-					{
-					if ((st.st_mode & S_IFMT) == S_IFDIR)
-						store = ft_dstrjoin(store, recursive(dp->d_name, str+1));
-					else
-					{
-						tmp = ft_strjoin(dty, "/");
-						s = ft_strjoin(tmp, dp->d_name);
-						free(tmp);
-						store = ft_realloc2(store, s);
-					}
-					}
-				}
-			}
+			if (*(str + 1) == NULL)
+				store = ft_realloc2(store, ft_strdup(dp->d_name));
+			else
+				save_store(&store, dp, str, dty);
 		}
 		dp = readdir(dir);
 	}

@@ -43,7 +43,8 @@ static bool	is_closed(char *word, char **arg)
 	return (true);
 }
 
-void	expansion_double_quote(char **word, char **arg, char ***args, t_shell *shell)
+void	expansion_double_quote(char **word, char **arg, \
+										char ***args, t_shell *shell)
 {
 	char	ch;
 	char	*tmp;
@@ -71,7 +72,8 @@ void	expansion_double_quote(char **word, char **arg, char ***args, t_shell *shel
 	next_word(word);
 }
 
-void	expansion_single_quote(char **word, char **arg, char ***args, t_shell *shell)
+void	expansion_single_quote(char **word, char **arg, \
+										char ***args, t_shell *shell)
 {
 	char	ch;
 	bool	quote;
