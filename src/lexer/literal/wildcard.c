@@ -145,6 +145,8 @@ void	wildcard(t_ip *ip, t_list **tokens)
 
 	str = ft_split(ip->id_string, '/');
 	store = recursive(".", str);
+	free(ip->id_string);
+	dp_free(str);
 	if (store == NULL)
 		return ;
 	sort(store);
@@ -154,8 +156,10 @@ void	wildcard(t_ip *ip, t_list **tokens)
 		ip->sy = IDENTIFY;
 		ip->id_string = store[i];
 		if (store[i + 1] != NULL)
+		{
 			save_token(ip, tokens);
+			free(ip->id_string);
+		}
 	}
 	free(store);
-	dp_free(str);
 }
