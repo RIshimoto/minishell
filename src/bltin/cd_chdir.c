@@ -59,10 +59,8 @@ bool is_first_chdir, t_shell *shell)
 int	change_dir(char *path, t_shell *shell)
 {
 	char	*absolute_path;
-	char	*change_path;
 	bool	is_absolute_path;
 
-	change_path = NULL;
 	absolute_path = get_absolute_path(path, &is_absolute_path, shell);
 	if (chdir(absolute_path) == 0)
 	{

@@ -157,4 +157,5 @@ void	wildcard(t_ip *ip, t_list **tokens)
 			save_token(ip, tokens);
 	}
 	free(store);
+	dp_free(str);
 }
