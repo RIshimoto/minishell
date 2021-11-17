@@ -180,14 +180,14 @@ void	save_history(t_dlist *line, t_shell *shell);
 
 // lexer
 void	lexer(t_dlist *line, t_list **tokens);
-void	get_token(t_dlist **line, t_ip *ip, t_list **tokens);
+void	get_token(t_dlist **line, t_ip *ip);
 void	save_token(t_ip *ip, t_list **tokens);
 char	next_ch(t_dlist **line, t_ip *ip);
 void	ip_charjoin(t_ip *ip, char ch);
 void	sort(char **tab);
 
 //	literal
-void	literal(t_dlist **line, t_ip *ip, t_list **tokens);
+void	literal(t_dlist **line, t_ip *ip);
 void	quoting(t_dlist **line, t_ip *ip);
 void	wildcard(t_ip *ip, t_list **tokens);
 char    **recursive(char *dty, char **str);

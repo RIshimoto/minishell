@@ -35,7 +35,7 @@ void	save_token(t_ip *ip, t_list **tokens)
 	ip->id_string = ft_calloc(sizeof(char), 1);
 }
 
-void	get_token(t_dlist **line, t_ip *ip, t_list **tokens)
+void	get_token(t_dlist **line, t_ip *ip)
 {
 	while (ip->ch == ' ' || ip->ch == '\t')
 		next_ch(line, ip);
@@ -45,7 +45,7 @@ void	get_token(t_dlist **line, t_ip *ip, t_list **tokens)
 		return ;
 	}
 	else if (ft_strchr("|&><", ip->ch) == NULL)
-		literal(line, ip, tokens);
+		literal(line, ip);
 	else
 		metacharacter(line, ip);
 }
@@ -59,10 +59,10 @@ void	lexer(t_dlist *line, t_list **tokens)
 	next_ch(&line, &ip);
 	while (ip.ch != '\0')
 	{
-		get_token(&line, &ip, tokens);
+		get_token(&line, &ip);
 		save_token(&ip, tokens);
 	}
-	get_token(&line, &ip, tokens);
+	get_token(&line, &ip);
 	save_token(&ip, tokens);
 	free(ip.id_string);
 }

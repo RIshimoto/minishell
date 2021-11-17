@@ -11,7 +11,6 @@ SRCS = \
 	src/lexer/literal/literal.c \
 	src/lexer/literal/quoting.c \
 	src/lexer/metacharacter/metacharacter.c \
-	src/lexer/literal/wildcard.c \
 	src/parser/parser.c \
 	src/parser/next_token.c \
 	src/interpreter/interpreter.c \

@@ -43,7 +43,7 @@ static void	string(t_dlist **line, t_ip *ip)
 	next_ch(line, ip);
 }
 
-void	literal(t_dlist **line, t_ip *ip, t_list **tokens)
+void	literal(t_dlist **line, t_ip *ip)
 {
 	ip->sy = IDENTIFY;
 	while (ft_strchr("|><& \t\0", ip->ch) == NULL)
@@ -57,6 +57,4 @@ void	literal(t_dlist **line, t_ip *ip, t_list **tokens)
 		else
 			string(line, ip);
 	}
-	if (ft_strchr(ip->id_string, '*') != NULL)
-		wildcard(ip, tokens);
 }
